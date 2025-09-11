@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Threading; //  Thread.Sleep 사용을 위해 추가. ( 딜레이 발생 )
+using System.Threading.Tasks;
 /***********************************************************
 
                       Creator : 임성현
@@ -44,6 +44,35 @@ namespace ConsoleProject
 {
     internal class Program
     {
+        //조작 방법을 알려주는 튜토리얼입니다.
+        static void tutorial()
+        {
+            Console.WriteLine("적과 관련된 인터페이스는 붉은색, 캐릭터와 관련된 인터페이스는 초록색으로 나옵니다.");
+            Console.WriteLine("Q,W,E,R,T,Y 6개의 키를 입력하여 각 키에 할당된 카드를 사용할 수 있습니다.\n");
+            Console.WriteLine("카드를 사용한 경우 해당 카드의 자리에는 파워 0의 카드, 빈 카드가 생기며");
+            Console.WriteLine("빈 카드를 사용할 경우 카드를 사용하지 않은 것으로 취급, 자신의 턴을 건너뜁니다.\n");
+            Console.WriteLine("빈 카드를 제외한 모든 카드는 행동 포인트를 소모합니다.");
+            Console.WriteLine("행동 포인트가 0이 될 경우 포인트를 10으로 보충하는 대신, 해당 턴 카드를 사용할 수 없습니다.\n");
+            Console.WriteLine("패는 6장을 전부 사용하거나 12번 카드 사용 시에 다시 보충됩니다.");
+            Console.WriteLine("14번 카드 \"조커\"는 12번 카드를 사용한 셔플 시에만 등장할 수 있습니다.\n");
+            Console.WriteLine("적의 행동 위력보다 낮은 파괴력을 가지는 카드를 사용했을 경우, 피해를 입힐 수 없습니다.");
+            Console.WriteLine("또한, 공격을 제외한 적의 모든 행동이 성공적으로 이루어지니, 최대한 행동 위력 이상의 파괴력을 가진 카드를 사용합시다.\n");
+            Console.WriteLine("적의 체력이 0이 되면 다음 스테이지로 이동하며, 총 4개의 적을 상대해야 합니다.");
+            Console.WriteLine("4번째 적을 쓰러트리면 클리어, 플레이어의 체력이 0이 되면 패배합니다.\n");
+            Thread.Sleep(3000);
+            Console.WriteLine("아무 키나 눌러 진행합니다.");
+            ConsoleKeyInfo skip;
+            skip = Console.ReadKey(true);
+            switch (skip.Key)
+            {
+                default:
+                    Console.Clear();
+                    break;
+            }
+
+        }
+        #region 스토리(비활성화)
+
         //게임의 인트로 입니다.
         static void phase1()
         {
@@ -157,36 +186,8 @@ namespace ConsoleProject
             //전부 출력 후 콘솔창 내용 삭제
             Console.Clear();
         }
-
-        //조작 방법을 알려주는 튜토리얼입니다.
-        static void tutorial()
-        {
-            Console.WriteLine("적과 관련된 인터페이스는 붉은색, 캐릭터와 관련된 인터페이스는 초록색으로 나옵니다.");
-            Console.WriteLine("Q,W,E,R,T,Y 6개의 키를 입력하여 각 키에 할당된 카드를 사용할 수 있습니다.\n");
-            Console.WriteLine("카드를 사용한 경우 해당 카드의 자리에는 파워 0의 카드, 빈 카드가 생기며");
-            Console.WriteLine("빈 카드를 사용할 경우 카드를 사용하지 않은 것으로 취급, 자신의 턴을 건너뜁니다.\n");
-            Console.WriteLine("빈 카드를 제외한 모든 카드는 행동 포인트를 소모합니다.");
-            Console.WriteLine("행동 포인트가 0이 될 경우 포인트를 10으로 보충하는 대신, 해당 턴 카드를 사용할 수 없습니다.\n");
-            Console.WriteLine("패는 6장을 전부 사용하거나 12번 카드 사용 시에 다시 보충됩니다.");
-            Console.WriteLine("14번 카드 \"조커\"는 12번 카드를 사용한 셔플 시에만 등장할 수 있습니다.\n");
-            Console.WriteLine("적의 행동 위력보다 낮은 파괴력을 가지는 카드를 사용했을 경우, 피해를 입힐 수 없습니다.");
-            Console.WriteLine("또한, 공격을 제외한 적의 모든 행동이 성공적으로 이루어지니, 최대한 행동 위력 이상의 파괴력을 가진 카드를 사용합시다.\n");
-            Console.WriteLine("적의 체력이 0이 되면 다음 스테이지로 이동하며, 총 4개의 적을 상대해야 합니다.");
-            Console.WriteLine("4번째 적을 쓰러트리면 클리어, 플레이어의 체력이 0이 되면 패배합니다.\n");
-            Console.WriteLine("절대. 무슨 일이 있어도.");
-            Console.WriteLine("0.4초 이상 키를 누르는 일은 없도록 합니다.\n");
-            Thread.Sleep(3000);
-            Console.WriteLine("아무 키나 눌러 진행합니다.");
-            ConsoleKeyInfo skip;
-            skip = Console.ReadKey(true);
-            switch (skip.Key)
-            {
-                default:
-                    Console.Clear();
-                    break;
-            }
-
-        }
+        #endregion
+        #region 엔딩
 
         //체력이 0이 되어 패배한 경우 나오는 배드 엔딩입니다.
         static void FailEnd()
@@ -255,6 +256,8 @@ namespace ConsoleProject
             }
             Console.SetCursorPosition(6, 0);
         }
+        #endregion
+        #region 함수
 
         //패에 잡힌 카드를 전부 사용했을 경우, 패를 리필하기 위해 사용합니다. 고정적으로 6을 기입합니다.
         static int[] Shuffle(int deck)
@@ -362,6 +365,8 @@ namespace ConsoleProject
             return damage;
 
         }
+        #endregion
+        #region 열거형
 
         // 플레이어의 패에 들어올 수 있는 카드가 담는 효과의 모음입니다.
         enum Hand
@@ -374,7 +379,8 @@ namespace ConsoleProject
         {
             공격, 방어, 회피, 연타, 폭주, 강타
         }
-
+        #endregion
+        #region 구조체
         //패에 들어오는 카드의 자료형입니다.
         struct MyHand
         {
@@ -425,7 +431,7 @@ namespace ConsoleProject
             //체력을 결정합니다. 해당 수치가 0이 될 경우 패배하여 게임이 종료됩니다.
             public double HealthPoint;
         }
-
+        #endregion
         static void Main(string[] args)
         {
             #region 설정
@@ -635,10 +641,12 @@ namespace ConsoleProject
             //본 게임에 들어가기 앞서 튜토리얼을 위한 설명을 띄웁니다.
             tutorial();
 
+            //처음 시작 시 적의 행동 위력과 행동 패턴을 실행시킵니다.
+            enemies[phase].Power = Power.Next(0, 9);
+            enemies[phase].TurnAct = (Act)pattern;
             //게임이 실행되고 있는 동안 다음 작업을 실행합니다.
             while (isGameOn)
             {
-
                 #region 페이즈별 캐릭터 대사
                 //페이즈별 캐릭터가 느끼는 감정을 표현
                 switch(phase)
@@ -661,100 +669,16 @@ namespace ConsoleProject
                         break;
                 }
                 #endregion
-                #region 적 행동 설정
-
-                //적의 종류에 따라, 상대의 행동 패턴을 형성합니다
-
-                //첫 번째 적의 행동 패턴을 2가지로 제한합니다.
-                if (phase == 0)
-                {
-                    switch(pattern)
-                    {
-                        case 0:
-                            enemies[phase].Power = Power.Next(0, 9);
-                            enemies[phase].TurnAct = (Act)pattern;
-                            pattern++;
-                            break;
-                        case 1:
-                            enemies[phase].Power = Power.Next(0, 9);
-                            enemies[phase].TurnAct = (Act)pattern;
-                            pattern--;
-                            break;
-                    }
-                }
-
-                //두 번째 적의 행동 패턴을 3가지로 제한합니다.
-                else if(phase == 1)
-                {
-
-                    switch (pattern)
-                    {
-                        case 0:
-                        case 1:
-                            enemies[phase].Power = Power.Next(2, 10);
-                            enemies[phase].TurnAct = (Act)pattern;
-                            pattern++;
-                            break;
-                        case 2:
-                            enemies[phase].Power = Power.Next(2, 10);
-                            enemies[phase].TurnAct = (Act)pattern;
-                            pattern = 0;
-                            break;
-                    }
-                }
-
-                //세 번째 적의 행동 패턴을 4가지로 제한합니다.
-                else if(phase == 2)
-                {
-                    switch (pattern)
-                    {
-                        case 0:
-                        case 1:
-                        case 2:
-                            enemies[phase].Power = Power.Next(3, 11);
-                            enemies[phase].TurnAct = (Act)pattern;
-                            pattern++;
-                            break;
-                        case 3:
-                            enemies[phase].Power = Power.Next(3, 11);
-                            enemies[phase].TurnAct = (Act)pattern;
-                            pattern = 0;
-                            break;
-                    }
-                }
-
-                //4번째 적은 모든 행동 패턴을 사용합니다.
-                else if(phase == 3)
-                {
-                    switch (pattern)
-                    {
-                        case 0:
-                        case 1:
-                        case 2:
-                        case 3:
-                        case 4:
-                            enemies[phase].Power = Power.Next(4, 14);
-                            enemies[phase].TurnAct = (Act)pattern;
-                            pattern++;
-                            break;
-                        case 5:
-                            enemies[phase].Power = Power.Next(4, 14);
-                            enemies[phase].TurnAct = (Act)pattern;
-                            pattern = 0;
-                            break;
-                    }
-                }
-                #endregion
                 #region 플레이어의 행동 요구
 
                 //적과 관련된 정보 - 적의 행동과 위력, 체력 제공
                 Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine($"행동 {enemies[phase].TurnAct} \t\t위력 {enemies[phase].Power} \t\t체력 {enemies[phase].HealthPoint}");
+                Console.WriteLine($"행동 {enemies[phase].TurnAct} \t\t위력 {enemies[phase].Power} \t\t체력 {enemies[phase].HealthPoint} \t\t공격력 {enemies[phase].AtkPoint}");
                 Console.WriteLine("");
 
                 //플레이어에 관련된 정보 - 플레이어의 체력과 행동 포인트, 소지 카드 제공
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"\t체력 {TwistedFate.HealthPoint}\t\t행동P {TwistedFate.ActPoint}");
+                Console.WriteLine($"\t체력 {TwistedFate.HealthPoint} \t\t공격력 {TwistedFate.AtkPoint} \t\t행동P {TwistedFate.ActPoint}");
                 Console.WriteLine("");
 
                 //"사용할 카드" 값 미리 초기화
@@ -777,17 +701,38 @@ namespace ConsoleProject
                 {
                     //(수정 과정에서 가독성 문제로 하나하나 끊어서 입력하였습니다)
                     Console.WriteLine("공격에 사용할 카드를 선택하여 주십시오.");
-                    Console.WriteLine($"카드 Q:{deck[0]}, 행동 포인트:{holdable[deck[0]].ReqAP}, 효과:{holdable[deck[0]].Effect}");
-                    Console.WriteLine($"카드 W:{deck[1]}, 행동 포인트:{holdable[deck[1]].ReqAP}, 효과:{holdable[deck[1]].Effect}");
-                    Console.WriteLine($"카드 E:{deck[2]}, 행동 포인트:{holdable[deck[2]].ReqAP}, 효과:{holdable[deck[2]].Effect}");
-                    Console.WriteLine($"카드 R:{deck[3]}, 행동 포인트:{holdable[deck[3]].ReqAP}, 효과:{holdable[deck[3]].Effect}");
-                    Console.WriteLine($"카드 T:{deck[4]}, 행동 포인트:{holdable[deck[4]].ReqAP}, 효과:{holdable[deck[4]].Effect}");
-                    Console.WriteLine($"카드 Y:{deck[5]}, 행동 포인트:{holdable[deck[5]].ReqAP}, 효과:{holdable[deck[5]].Effect}");
+                    Console.WriteLine($"카드 Q:{holdable[deck[0]].Effect}, 행동 포인트:{holdable[deck[0]].ReqAP}");
+                    Console.WriteLine($"카드 W:{holdable[deck[1]].Effect}, 행동 포인트:{holdable[deck[1]].ReqAP}");
+                    Console.WriteLine($"카드 E:{holdable[deck[2]].Effect}, 행동 포인트:{holdable[deck[2]].ReqAP}");
+                    Console.WriteLine($"카드 R:{holdable[deck[3]].Effect}, 행동 포인트:{holdable[deck[3]].ReqAP}");
+                    Console.WriteLine($"카드 T:{holdable[deck[4]].Effect}, 행동 포인트:{holdable[deck[4]].ReqAP}");
+                    Console.WriteLine($"카드 Y:{holdable[deck[5]].Effect}, 행동 포인트:{holdable[deck[5]].ReqAP}");
 
                     //사용할 카드 입력받기
                     handCard = Console.ReadKey(true);
 
-                    //오류 방지 ( 문자열 등 입력 / 0 입력 / 음수 입력 / 6 이상 입력 / 이미 사용한 카드 지정 )
+                    //오류 방지 1 - QWERTY 이외의 다른 키를 입력하였을 경우, 딜레이 없이 즉시 다시 요구
+                    while(handCard.Key != ConsoleKey.Q && handCard.Key != ConsoleKey.W && handCard.Key != ConsoleKey.E && handCard.Key != ConsoleKey.R && handCard.Key != ConsoleKey.T && handCard.Key != ConsoleKey.Y )
+                    {
+                        Console.Clear();
+                        Console.WriteLine("잘못된 입력을 가하였습니다. 지정된 카드를 사용하여 주십시오.");
+                        Console.WriteLine("");
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.WriteLine($"행동 {enemies[phase].TurnAct} \t\t위력 {enemies[phase].Power} \t\t체력 {enemies[phase].HealthPoint} \t\t공격력 {enemies[phase].AtkPoint}");
+                        Console.WriteLine("");
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine($"\t체력 {TwistedFate.HealthPoint} \t\t공격력 {TwistedFate.AtkPoint} \t\t행동P {TwistedFate.ActPoint}");
+                        Console.WriteLine("");
+                        Console.ResetColor();
+                        Console.WriteLine($"카드 Q:{holdable[deck[0]].Effect}, 행동 포인트:{holdable[deck[0]].ReqAP}");
+                        Console.WriteLine($"카드 W:{holdable[deck[1]].Effect}, 행동 포인트:{holdable[deck[1]].ReqAP}");
+                        Console.WriteLine($"카드 E:{holdable[deck[2]].Effect}, 행동 포인트:{holdable[deck[2]].ReqAP}");
+                        Console.WriteLine($"카드 R:{holdable[deck[3]].Effect}, 행동 포인트:{holdable[deck[3]].ReqAP}");
+                        Console.WriteLine($"카드 T:{holdable[deck[4]].Effect}, 행동 포인트:{holdable[deck[4]].ReqAP}");
+                        Console.WriteLine($"카드 Y:{holdable[deck[5]].Effect}, 행동 포인트:{holdable[deck[5]].ReqAP}");
+                        handCard = Console.ReadKey(true);
+                    }
+                    //입력받은 카드 사용을 위한 위치 파악
                     switch (handCard.Key)
                     {
                         case ConsoleKey.Q:
@@ -808,20 +753,18 @@ namespace ConsoleProject
                         case ConsoleKey.Y:
                             usedOne = 5;
                             break;
-                        default:
-                            Console.Clear();
-                            Console.WriteLine("잘못된 입력을 가하였습니다.");
-                            Console.WriteLine("Q, W, E, R, T, Y 중 한 가지를 골라 주십시오. \n 1초 후 돌아갑니다.");
-                            Console.WriteLine($"카드 Q:{deck[0]}, 행동 포인트:{holdable[deck[0]].ReqAP}, 효과:{holdable[deck[0]].Effect}");
-                            Console.WriteLine($"카드 W:{deck[1]}, 행동 포인트:{holdable[deck[1]].ReqAP}, 효과:{holdable[deck[1]].Effect}");
-                            Console.WriteLine($"카드 E:{deck[2]}, 행동 포인트:{holdable[deck[2]].ReqAP}, 효과:{holdable[deck[2]].Effect}");
-                            Console.WriteLine($"카드 R:{deck[3]}, 행동 포인트:{holdable[deck[3]].ReqAP}, 효과:{holdable[deck[3]].Effect}");
-                            Console.WriteLine($"카드 T:{deck[4]}, 행동 포인트:{holdable[deck[4]].ReqAP}, 효과:{holdable[deck[4]].Effect}");
-                            Console.WriteLine($"카드 Y:{deck[5]}, 행동 포인트:{holdable[deck[5]].ReqAP}, 효과:{holdable[deck[5]].Effect}");
-                            Thread.Sleep(1000);
-                            Console.Clear();
-                            continue;
                     }
+                }
+
+                //오류 방지 2 - 파워 0인 카드를 사용했을 경우 사용을 막고 방금 전 상황으로 되돌아감.
+                if(deck[usedOne] == 0)
+                {
+                    Console.Clear();
+                    Console.WriteLine("불명 카드는 사용할 수 없습니다. 다른 효과를 가진 카드를 사용하여 주십시오.");
+                    Console.WriteLine("잠시 뒤 되돌아갑니다.");
+                    Thread.Sleep(2000);
+                    Console.Clear();
+                    continue;
                 }
                 #endregion
                 #region 카드 입력 후 남아있던 1회성 버프 제거
@@ -874,6 +817,7 @@ namespace ConsoleProject
                     if(berserkTurn == 5)
                     {
                         isBossBerserkActive = false;
+                        enemies[phase].AtkPoint /= 2;
                         berserkTurn = 0;
                     }
                 }
@@ -939,6 +883,7 @@ namespace ConsoleProject
                     //사실 리플렉트라기보다는 패링에 가깝지만, 처음 생각난 단어는 리플렉트였습니다.
                     case 9:
                         isReflectActive = true;
+                        if (enemies[phase].TurnAct == Act.공격 || enemies[phase].TurnAct == Act.연타 || enemies[phase].TurnAct == Act.강타)
                         if (enemies[phase].TurnAct != Act.공격)
                         {
                             pDamage = 0;
@@ -966,7 +911,7 @@ namespace ConsoleProject
                         break;
                 }
 
-                //플레이어가 선택한 카드의 파괴력과 적의 행동 위력 비교, 선택한 카드가 적의 행동 위력보다 높거나 서로 같으면 상대의 행동 파훼.
+                //플레이어가 선택한 카드의 파괴력과 적의 행동 위력 이상이면 공격 이외의 상대의 행동을 파훼합니다.
                 if (power >= enemies[phase].Power)
                 {
                     Console.WriteLine("적의 행동 위력 이상의 파괴력을 가진 카드를 사용하여 적의 행동에 영향을 가합니다.");
@@ -977,12 +922,15 @@ namespace ConsoleProject
                     Console.WriteLine($"적에게 {pDamage}만큼의 피해를 입혔습니다.");
                     Thread.Sleep(1500);
                 }
+
+                //플레이어가 선택한 카드의 파괴력이 적의 행동 위력보다 낮으면 상대의 행동에 따라 피해가 달라집니다.
                 else
                 {
                     Console.WriteLine("적보다 낮은 파괴력을 가진 카드를 사용하여 적의 행동에 영향을 주지 못하였습니다.");
                     if (enemies[phase].TurnAct == Act.방어)
                     {
                         Console.WriteLine($"적이 공격을 방어하여 피해를 {enemies[phase].DmgReduction * 100}%만큼 감소시켰습니다.");
+                        Console.WriteLine($"적에게 {pDamage * enemies[phase].DmgReduction}만큼의 피해를 입혔습니다.");
 
                         //피해량에 적의 데미지 경감율을 곱하여 해당 값을 적의 체력에서 감소시킵니다.
                         enemies[phase].HealthPoint = enemies[phase].HealthPoint - pDamage * enemies[phase].DmgReduction;
@@ -1002,7 +950,8 @@ namespace ConsoleProject
 
                         //폭주의 트리거를 활성화합니다.
                         isBossBerserkActive = true;
-                        //
+                        //보스의 피해량이 2배 상승합니다.
+                        enemies[phase].AtkPoint *= 2;
                         Thread.Sleep(1500);
                     }
                 }
@@ -1069,15 +1018,20 @@ namespace ConsoleProject
                             }
                             break;
                         case Act.강타:
+                            // 리플렉트 버프 지속 상태인 경우, 공격을 반사시켜 적에게 피해를 입힙니다.
                             if (isReflectActive == true)
                             {
                                 Console.WriteLine("리플렉트의 효과로 공격을 반사하였습니다!");
-                                enemies[phase].HealthPoint = enemies[phase].HealthPoint - enemies[phase].AtkPoint;
+                                enemies[phase].HealthPoint = enemies[phase].HealthPoint - (double)enemies[phase].AtkPoint* 1.5;
                             }
+
+                            // 리플렉트 버프 지속 상태가 아니라면, 파괴력이 적 행동 위력 이상인 경우 틈을 노려 공격 준비 상태의 적을 무력화합니다.
                             else if (power >= enemies[phase].Power)
                             {
                                 Console.WriteLine("상대의 행동 위력보다 더 큰 파괴력의 공격이 성공적으로 공격을 끊어냈습니다!");
                             }
+
+                            //리플렉트 버프 지속 상태가 아니고, 파괴력이 적 행동 위력보다 낮다면 적이 준비를 끝마치고 공격에 성공합니다.
                             else
                             {
                                 Console.WriteLine("적의 충전을 막지 못하였습니다.");
@@ -1105,7 +1059,92 @@ namespace ConsoleProject
                     isGameOn = false;
                 }
                 #endregion
+                #region 적 행동 설정
+                
+                //적의 종류에 따라, 상대의 행동 패턴을 형성합니다
+
+                //첫 번째 적의 행동 패턴을 2가지로 제한합니다.
+                if (phase == 0)
+                {
+                    switch(pattern)
+                    {
+                        case 0:
+                            pattern++;
+                            enemies[phase].Power = Power.Next(0, 9);
+                            enemies[phase].TurnAct = (Act)pattern;
+                            break;
+                        case 1:
+                            pattern--;
+                            enemies[phase].Power = Power.Next(0, 9);
+                            enemies[phase].TurnAct = (Act)pattern;
+                            break;
+                    }
+                }
+
+                //두 번째 적의 행동 패턴을 3가지로 제한합니다.
+                else if(phase == 1)
+                {
+
+                    switch (pattern)
+                    {
+                        case 0:
+                        case 1:
+                            pattern++;
+                            enemies[phase].Power = Power.Next(2, 10);
+                            enemies[phase].TurnAct = (Act)pattern;
+                            break;
+                        case 2:
+                            pattern = 0;
+                            enemies[phase].Power = Power.Next(2, 10);
+                            enemies[phase].TurnAct = (Act)pattern;
+                            break;
+                    }
+                }
+
+                //세 번째 적의 행동 패턴을 4가지로 제한합니다.
+                else if(phase == 2)
+                {
+                    switch (pattern)
+                    {
+                        case 0:
+                        case 1:
+                        case 2:
+                            pattern++;
+                            enemies[phase].Power = Power.Next(3, 11);
+                            enemies[phase].TurnAct = (Act)pattern;
+                            break;
+                        case 3:
+                            pattern = 0;
+                            enemies[phase].Power = Power.Next(3, 11);
+                            enemies[phase].TurnAct = (Act)pattern;
+                            break;
+                    }
+                }
+
+                //4번째 적은 모든 행동 패턴을 사용합니다.
+                else if(phase == 3)
+                {
+                    switch (pattern)
+                    {
+                        case 0:
+                        case 1:
+                        case 2:
+                        case 3:
+                        case 4:
+                            pattern++;
+                            enemies[phase].Power = Power.Next(4, 14);
+                            enemies[phase].TurnAct = (Act)pattern;
+                            break;
+                        case 5:
+                            pattern = 0;
+                            enemies[phase].Power = Power.Next(4, 14);
+                            enemies[phase].TurnAct = (Act)pattern;
+                            break;
+                    }
+                }
+                #endregion
                 #region 턴 넘김
+
                 //만약 사용한 카드가 유일하게 효과가 있는 카드였다면, 카드를 새로 보충합니다.
                 if(deck[0] == 0 && deck[1] == 0 && deck[2] == 0 && deck[3] == 0 && deck[4] == 0 && deck[5] == 0)
                 {
@@ -1113,8 +1152,11 @@ namespace ConsoleProject
                     deck = Shuffle(6);
                     Thread.Sleep(1500);
                 }
+
                 //진행 완료 후 초기 화면 상태로 돌아가기 위해 현재 콘솔에 남아있는 것들을 전부 삭제합니다.
                 Console.Clear();
+
+                //게임의 엔딩 시점인 4번째 적 격파 상태 확인 시 엔딩을 출력하고 게임을 종료합니다.
                 if(phase >= 4)
                 {
                     RealEnd();
